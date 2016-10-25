@@ -1,0 +1,16 @@
+extends ./layout.pug
+
+block title
+    title !{bloghome.getText("bloghome.headline")}
+
+block body
+    body.page
+        - var image = bloghome.getImage('bloghome.image')
+        - var maybeBloghomeImageUrl = image ? image.getView("main").url : ''
+        - var illustrationUrl = maybeBloghomeImageUrl || ''
+
+        div.home
+            div.blog-avatar(style='background-image: url(' + illustrationUrl + ');')
+            h1.blog-title !{bloghome.getText('bloghome.headline')}
+            p.blog-description !{bloghome.getText('bloghome.description')}
+        div.blog-main

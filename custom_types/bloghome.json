@@ -1,0 +1,21 @@
+{
+  "Main" : {
+    "headline" : {
+      "type" : "StructuredText",
+      "config" : {
+        "placeholder" : "Main title...",
+        "single" : "heading1"
+      }
+    },
+    "description" : {
+      "type" : "StructuredText",
+      "config" : {
+        "placeholder" : "Sub-title",
+        "single" : "heading2"
+      }
+    },
+    "image" : {
+      "type" : "Image"
+    }
+  }
+}
