@@ -18,9 +18,8 @@ var app = express();
 app.locals.general = require('./includes/general');
 
 // Prismic.io configuration
-
-prismic.init(app, configuration, handleError)
-
+var manualRouting = true
+prismic.init(app, configuration, manualRouting, handleError)
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -35,6 +34,23 @@ app.use(session({secret: '1234', saveUninitialized: true, resave: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(errorHandler());
+
+//route
+app.route('/').get(function(req, res) {
+  var options = {orderings : `[my.post.date desc]`}
+  req.prismic.api.query(('[[:d = at(document.type, "post")]]'), options)
+  .then(function(response){
+    var data = Object.assign({}, req.prismic.bloghome.data)
+    data.posts = response.results
+    res.render(req.prismic.bloghome.view, data)
+  })
+  .catch(function(err) {
+    res.end()
+  })
+})
+
+
+
 
 function handleError(err, req, res) {
   if (err.status == 404) {
